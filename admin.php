@@ -11,13 +11,25 @@
 require('connect.php');
 require('authenticate.php');
 
-// Fetch the five most recent posts
-$query = "SELECT id, title, date, content FROM posts ORDER BY date DESC LIMIT 5";
+// Determine the sort order (default is by date)
+$sort = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_STRING);
+$sortOrder = 'date DESC';  // Default sorting by date (latest first)
+
+if ($sort === 'title') {
+    $sortOrder = 'title ASC';
+} elseif ($sort === 'created_at') {
+    $sortOrder = 'date ASC';  // Earliest first
+} elseif ($sort === 'updated_at') {
+    $sortOrder = 'date DESC';  // Latest updated first
+}
+
+// Fetch posts with the determined sort order
+$query = "SELECT id, title, date, content FROM posts ORDER BY $sortOrder";
 $statement = $db->prepare($query);
 $statement->execute();
 $posts = $statement->fetchAll();
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,17 +52,23 @@ $posts = $statement->fetchAll();
     <a class="newpost" href="newpost.php">Create New Recipes</a>
     <br>
     <br>
-    <h2>Recently Recipes</h2>
+    <h2>Recent Recipes</h2>
+    <br>
+    <div>
+        <strong>Sort by:</strong>
+        <a href="admin.php?sort=title" class="<?= $sort === 'title' ? 'active' : '' ?>">Title</a> |
+        <a href="admin.php?sort=created_at" class="<?= $sort === 'created_at' ? 'active' : '' ?>">Date Created</a> |
+        <a href="admin.php?sort=updated_at" class="<?= $sort === 'updated_at' ? 'active' : '' ?>">Date Updated</a>
+    </div>
+
     <br>
     <?php foreach ($posts as $post): ?>
         <div class="post">
             <div class="post-header">
-                <h3><a href="delete_comment.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h3>
+                <h3><a href="post.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
                 <small><a href="edit.php?id=<?= $post['id'] ?>">Edit</a></small>
-
             </div>
             <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
-
             <br>
         </div>
     <?php endforeach; ?>

@@ -213,9 +213,18 @@ p {
 }
 
 .delete-form {
-    display: inline; /* or block, depending on your layout */
+    background-color: #721c24;
+    display: inline; /* Keep the form inline with the button */
+    margin: 0; /* Remove any margin around the form */
+    padding: 0; /* Remove any padding around the form */
+    padding: 500px;
 }
 
 .delete-form input[type="hidden"] {
-    display: none; /* Hides the hidden input fields */
+    display: none; /* Hide the hidden input fields */
+}
+
+.active {
+    font-weight: bold;
+    text-decoration: underline;
 }
