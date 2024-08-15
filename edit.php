@@ -8,8 +8,8 @@
 
 ****************/
 
-require ('connect.php');
-require ('authenticate.php');
+require('connect.php');
+require('authenticate.php');
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if ($id == false) {
@@ -98,10 +98,13 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
     <title>My Blog - Editing <?= htmlspecialchars($post['title']) ?></title>
+
+    <!-- CKEditor 5 CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
 </head>
 
 <body>
-    <!-- Remember that alternative syntax is good and html inside php is bad -->
     <h1><a href="index.php">Editing Recipes</a></h1>
     <a class="home" href="admin.php">Return to Admin</a>
     <br><br>
@@ -120,7 +123,6 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         </div>
         <div>
             <label for="vegetarian_id">Category</label>
-            <br>
             <br>
             <select id="vegetarian_id" name="vegetarian_id">
                 <?php foreach ($categories as $category): ?>
@@ -150,6 +152,16 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
             </ul>
         </div>
     <?php endif; ?>
+
+    <!-- Initialize CKEditor 5 -->
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#content'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 </body>
 
 </html>
+
