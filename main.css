@@ -211,3 +211,11 @@ p {
     line-height: 1.5;
     color: #333;
 }
+
+.delete-form {
+    display: inline; /* or block, depending on your layout */
+}
+
+.delete-form input[type="hidden"] {
+    display: none; /* Hides the hidden input fields */
+}
