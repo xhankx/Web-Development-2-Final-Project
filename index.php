@@ -19,7 +19,12 @@ $categories = $categoryStatement->fetchAll(PDO::FETCH_ASSOC);
 $category_id = filter_input(INPUT_GET, 'category', FILTER_VALIDATE_INT);
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING);
 
-// Build the query based on category and search
+// Set the number of posts per page
+$limit = 5;
+$page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) ?: 1; // Current page number, default is 1
+$offset = ($page - 1) * $limit; // Calculate the offset for SQL query
+
+// Build the query based on category and search with pagination
 $query = "SELECT id, title, date, content FROM posts WHERE 1=1";
 
 $params = [];
@@ -33,14 +38,38 @@ if ($search) {
     $params[':search'] = "%$search%";
 }
 
-$query .= " ORDER BY date DESC"; // No LIMIT clause to fetch all posts
+// Add order, limit, and offset for pagination
+$query .= " ORDER BY date DESC LIMIT :limit OFFSET :offset";
+$params[':limit'] = $limit;
+$params[':offset'] = $offset;
 
 $statement = $db->prepare($query);
 foreach ($params as $key => $value) {
     $statement->bindValue($key, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
 }
 $statement->execute();
-$posts = $statement->fetchAll();
+$posts = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+// Count the total number of posts for pagination
+$countQuery = "SELECT COUNT(*) FROM posts WHERE 1=1";
+
+if ($category_id) {
+    $countQuery .= " AND vegetarian_id = :category_id";
+}
+
+if ($search) {
+    $countQuery .= " AND (title LIKE :search OR content LIKE :search)";
+}
+
+$countStatement = $db->prepare($countQuery);
+foreach ($params as $key => $value) {
+    if ($key !== ':limit' && $key !== ':offset') { // Exclude limit and offset from count query
+        $countStatement->bindValue($key, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+    }
+}
+$countStatement->execute();
+$totalPosts = $countStatement->fetchColumn();
+$totalPages = ceil($totalPosts / $limit);
 
 ?>
 
@@ -105,6 +134,21 @@ $posts = $statement->fetchAll();
             <br>
         </div>
     <?php endforeach; ?>
+
+    <!-- Pagination Links -->
+    <div class="pagination">
+        <?php if ($page > 1): ?>
+            <a href="index.php?search=<?= urlencode($search) ?>&category=<?= $category_id ?>&page=<?= $page - 1 ?>">Previous</a>
+        <?php endif; ?>
+
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <a href="index.php?search=<?= urlencode($search) ?>&category=<?= $category_id ?>&page=<?= $i ?>" <?= $i == $page ? 'class="active"' : '' ?>><?= $i ?></a>
+        <?php endfor; ?>
+
+        <?php if ($page < $totalPages): ?>
+            <a href="index.php?search=<?= urlencode($search) ?>&category=<?= $category_id ?>&page=<?= $page + 1 ?>">Next</a>
+        <?php endif; ?>
+    </div>
 </body>
 
 </html>
