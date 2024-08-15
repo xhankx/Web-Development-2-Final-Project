@@ -17,7 +17,8 @@ if ($id == false) {
     exit();
 }
 
-$query = "SELECT id, title, content FROM posts WHERE id = :id";
+// Fetch the post to be edited
+$query = "SELECT id, title, content, vegetarian_id FROM posts WHERE id = :id";
 $statement = $db->prepare($query);
 $statement->bindValue(':id', $id, PDO::PARAM_INT);
 $statement->execute();
@@ -30,12 +31,20 @@ if ($post == false) {
 
 $title = $post['title'];
 $content = $post['content'];
+$vegetarian_id = $post['vegetarian_id'];
 $errors = [];
+
+// Fetch categories
+$categoryQuery = "SELECT id, name FROM vegetarian";
+$categoryStatement = $db->prepare($categoryQuery);
+$categoryStatement->execute();
+$categories = $categoryStatement->fetchAll(PDO::FETCH_ASSOC);
 
 // Check if the form is submitted for updating the blog
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+    $vegetarian_id = filter_input(INPUT_POST, 'vegetarian_id', FILTER_VALIDATE_INT);  // Update the vegetarian_id with the new value
 
     if (strlen(trim($title)) < 1) {
         $errors['title'] = 'Title is required and must be at least 1 character in length.';
@@ -46,10 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
     }
 
     if (empty($errors)) {
-        $query = "UPDATE posts SET title = :title, content = :content WHERE id = :id";
+        $query = "UPDATE posts SET title = :title, content = :content, vegetarian_id = :vegetarian_id WHERE id = :id";
         $statement = $db->prepare($query);
         $statement->bindValue(':title', $title);
         $statement->bindValue(':content', $content);
+        $statement->bindValue(':vegetarian_id', $vegetarian_id, PDO::PARAM_INT);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
@@ -87,7 +97,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>My Blog - Editing <?= $post['title'] ?></title>
+    <title>My Blog - Editing <?= htmlspecialchars($post['title']) ?></title>
 </head>
 
 <body>
@@ -99,20 +109,32 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         <div>
             <label for="title">Title</label>
             <br>
-            <input type="text" id="title" name="title" value="<?= $title ?>">
+            <input type="text" id="title" name="title" value="<?= htmlspecialchars($title) ?>">
             <br><br>
         </div>
         <div>
             <label for="content">Content</label>
             <br>
-            <textarea id="content" name="content"><?= $content ?></textarea>
+            <textarea id="content" name="content"><?= htmlspecialchars($content) ?></textarea>
+            <br><br>
+        </div>
+        <div>
+            <label for="vegetarian_id">Category</label>
+            <br>
+            <br>
+            <select id="vegetarian_id" name="vegetarian_id">
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= $category['id'] ?>" <?= $category['id'] == $vegetarian_id ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($category['name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
             <br><br>
         </div>
         <div>
             <button type="submit" name="update">Update the Recipes</button>
         </div>
     </form>
-
 
     <form method="post" action="edit.php?id=<?= $id ?>"
         onsubmit="return confirm('Are you sure you want to delete this post?');">
