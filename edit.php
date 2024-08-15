@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
-        header("Location: post.php?id=$id");
+        header("Location: admin.php");
         exit();
     }
 }
@@ -67,11 +67,11 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
-        header("Location: index.php");
+        header("Location: admin.php");
         exit();
     } else {
         // Invalid id
-        header("Location: index.php");
+        header("Location: admin.php");
         exit();
     }
 }
@@ -92,8 +92,8 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
 
 <body>
     <!-- Remember that alternative syntax is good and html inside php is bad -->
-    <h1><a href="index.php">My Amazing Blog</a></h1>
-    <a class="home" href="index.php">Home</a>
+    <h1><a href="index.php">Editing Recipes</a></h1>
+    <a class="home" href="admin.php">Return to Admin</a>
     <br><br>
     <form method="post" action="edit.php?id=<?= $id ?>">
         <div>
@@ -109,7 +109,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
             <br><br>
         </div>
         <div>
-            <button type="submit" name="update">Submit Blog</button>
+            <button type="submit" name="update">Update the Recipes</button>
         </div>
     </form>
 
@@ -117,7 +117,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     <form method="post" action="edit.php?id=<?= $id ?>"
         onsubmit="return confirm('Are you sure you want to delete this post?');">
         <input type="hidden" name="id" value="<?= $id ?>">
-        <button type="submit" name="delete" value="delete">Delete Post</button>
+        <button type="submit" name="delete" value="delete">Delete the Recipes</button>
     </form>
     <?php if (!empty($errors)): ?>
         <div class="errors">

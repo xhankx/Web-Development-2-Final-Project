@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $statement->bindValue(':content', $content);
         $statement->execute();
 
-        header("Location: index.php");
+        header("Location: admin.php");
         exit();
     }
 }
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <!-- Remember that alternative syntax is good and html inside php is bad -->
     <h1><a href="index.php">My Amazing Blog</a></h1>
-    <a class="home" href="index.php">Home</a>
+    <a class="home" href="admin.php">Return to Admin</a>
     <br><br>
     <form method="post" action="newpost.php">
         <div>
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <br><br>
         </div>
         <div>
-            <button type="submit">Submit Blog</button>
+            <button type="submit">Submit Recipes</button>
         </div>
     </form>
     <?php if (!empty($errors)): ?>

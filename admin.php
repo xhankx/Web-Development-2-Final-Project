@@ -8,7 +8,8 @@
 
 ****************/
 
-require('connect.php');
+require ('connect.php');
+require ('authenticate.php');
 
 // Fetch the five most recent posts
 $query = "SELECT id, title, date, content FROM posts ORDER BY date DESC LIMIT 5";
@@ -36,7 +37,7 @@ $posts = $statement->fetchAll();
     <h3><a href="admin.php">admin</a></h3>
 
     <a class="home" href="index.php">Home</a>
-
+    <a class="newpost" href="newpost.php">Create New Recipes</a>
     <br>
     <br>
     <h2>Recently Posted Blog Entries</h2>
@@ -45,6 +46,7 @@ $posts = $statement->fetchAll();
         <div class="post">
             <div class="post-header">
                 <h3><a href="post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h3>
+                <small><a href="edit.php?id=<?= $post['id'] ?>">Edit</a></small>
             </div>
             <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
             <p>
