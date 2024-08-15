@@ -10,13 +10,27 @@
 
 require('connect.php');
 
-// Fetch the five most recent posts
-$query = "SELECT id, title, date, content FROM posts ORDER BY date DESC LIMIT 5";
-$statement = $db->prepare($query);
+// Fetch all categories
+$categoryQuery = "SELECT id, name FROM vegetarian";
+$categoryStatement = $db->prepare($categoryQuery);
+$categoryStatement->execute();
+$categories = $categoryStatement->fetchAll(PDO::FETCH_ASSOC);
+
+$category_id = filter_input(INPUT_GET, 'category', FILTER_VALIDATE_INT);
+if ($category_id) {
+    // Fetch posts by selected category
+    $query = "SELECT id, title, date, content FROM posts WHERE vegetarian_id = :category_id ORDER BY date DESC LIMIT 5";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':category_id', $category_id, PDO::PARAM_INT);
+} else {
+    // Fetch all posts if no category is selected
+    $query = "SELECT id, title, date, content FROM posts ORDER BY date DESC LIMIT 5";
+    $statement = $db->prepare($query);
+}
 $statement->execute();
 $posts = $statement->fetchAll();
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,18 +51,27 @@ $posts = $statement->fetchAll();
 
     <a class="home" href="index.php">Home</a>
 
-    <br>
+    <div>
+        <h4>Categories</h4>
+        <ul>
+            <li><a href="index.php">All</a></li> <!-- Link to show all posts -->
+            <?php foreach ($categories as $category): ?>
+                <li><a href="index.php?category=<?= $category['id'] ?>"><?= htmlspecialchars($category['name']) ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
     <br>
     <h2>Recently Recipes</h2>
     <br>
     <?php foreach ($posts as $post): ?>
         <div class="post">
             <div class="post-header">
-                <h3><a href="post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h3>
+                <h3><a href="post.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
             </div>
             <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
             <p>
-                <?= nl2br(strlen($post['content']) > 200 ? substr($post['content'], 0, 200) . '...' : $post['content']) ?>
+                <?= nl2br(strlen($post['content']) > 200 ? substr($post['content'], 0, 200) . '...' : htmlspecialchars($post['content'])) ?>
                 <?php if (strlen($post['content']) > 200): ?>
                     <a href="post.php?id=<?= $post['id'] ?>">Read Full Post</a>
                 <?php endif; ?>
