@@ -173,3 +173,41 @@ p {
 .post-header a {
     color: #0056b3;
 }
+
+.comments {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Style for each individual comment */
+.comment {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+/* Author's name styling */
+.comment p strong {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Date and time styling */
+.comment p small {
+    color: #666;
+    font-size: 12px;
+}
+
+/* Comment text styling */
+.comment p {
+    margin: 5px 0;
+    line-height: 1.5;
+    color: #333;
+}
