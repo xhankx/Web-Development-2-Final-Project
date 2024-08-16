@@ -45,7 +45,7 @@ $posts = $statement->fetchAll();
 <body>
     <!-- Remember that alternative syntax is good and html inside php is bad -->
     <br>
-    <h1><a href="index.php">Food Around The World</a></h1>
+    <h1><a href="index.php">Food Hub</a></h1>
     <h3><a href="admin.php">admin</a></h3>
 
     <a class="home" href="index.php">Home</a>
