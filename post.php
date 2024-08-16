@@ -34,9 +34,10 @@ if ($post === false) {
 // Generate the correct slug based on the post title
 $correct_slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $post['title']), '-'));
 
+// Check if the slug matches the correct slug
 if ($slug !== $correct_slug) {
-    // Redirect to the correct URL if the slug doesn't match
-    header("Location: post.php?id=$id&title=$correct_slug");
+    // Redirect to the "super pretty" URL if the slug doesn't match
+    header("Location: /posts/$id/$correct_slug", true, 301);
     exit();
 }
 
@@ -56,15 +57,17 @@ $comments = $comments_statement->fetchAll();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/wd2/Assignments/Project/Web-Development-2-Final-Project/main.css">
+
     <title>My Blog Post - <?= htmlspecialchars($post['title']) ?></title>
 </head>
 
 <body>
     <!-- Remember that alternative syntax is good and html inside php is bad -->
     <br>
-    <h1><a href="index.php">Food Hub</a></h1>
-    <a class="home" href="index.php">Home</a>
+    <h1><a href="/wd2/Assignments/Project/Web-Development-2-Final-Project/index.php">Food Hub</a></h1>
+    <a class="home" href="/wd2/Assignments/Project/Web-Development-2-Final-Project/index.php">Home</a>
+
     <br><br>
     <div class="post">
         <div class="post-header">
@@ -94,13 +97,15 @@ $comments = $comments_statement->fetchAll();
         <textarea name="comment" id="comment" required></textarea>
 
         <label for="captcha">Enter the code:</label>
-        <img src="captcha.php" alt="CAPTCHA Image">
+        <img src="/wd2/Assignments/Project/Web-Development-2-Final-Project/captcha.php" alt="CAPTCHA Image">
         <input type="text" name="captcha" id="captcha" required>
+
 
         <?php if (isset($_GET['captcha_error'])): ?>
             <p style="color:red;">CAPTCHA was incorrect. Please try again.</p>
         <?php endif; ?>
-
+        <br>
+        <br>
         <button type="submit">Submit</button>
     </form>
 
