@@ -120,15 +120,20 @@ $totalPages = ceil($totalPosts / $limit);
     <h2>Recently Recipes</h2>
     <br>
     <?php foreach ($posts as $post): ?>
+        <?php
+            // Create a URL-friendly slug from the post title
+            $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $post['title']), '-'));
+            $permalink = "post.php?id=" . $post['id'] . "&title=" . $slug;
+        ?>
         <div class="post">
             <div class="post-header">
-                <h3><a href="post.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
+                <h3><a href="<?= $permalink ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
             </div>
             <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
             <p>
                 <?= nl2br(strlen($post['content']) > 200 ? substr($post['content'], 0, 200) . '...' : htmlspecialchars($post['content'])) ?>
                 <?php if (strlen($post['content']) > 200): ?>
-                    <a href="post.php?id=<?= $post['id'] ?>">Read Full Post</a>
+                    <a href="<?= $permalink ?>">Read Full Post</a>
                 <?php endif; ?>
             </p>
             <br>

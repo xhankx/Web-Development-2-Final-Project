@@ -10,20 +10,33 @@
 
 require('connect.php');
 
+// Get the ID and slug from the URL
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-if ($id == false) {
+$slug = filter_input(INPUT_GET, 'title', FILTER_SANITIZE_STRING);
+
+if ($id === false || $slug === false) {
     header("Location: index.php");
     exit();
 }
 
+// Fetch the post from the database
 $query = "SELECT id, title, date, content FROM posts WHERE id = :id";
 $statement = $db->prepare($query);
 $statement->bindValue(':id', $id, PDO::PARAM_INT);
 $statement->execute();
 $post = $statement->fetch();
 
-if ($post == false) {
-    header("Location: post.php");
+if ($post === false) {
+    header("Location: index.php");
+    exit();
+}
+
+// Generate the correct slug based on the post title
+$correct_slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $post['title']), '-'));
+
+if ($slug !== $correct_slug) {
+    // Redirect to the correct URL if the slug doesn't match
+    header("Location: post.php?id=$id&title=$correct_slug");
     exit();
 }
 
@@ -36,7 +49,6 @@ $comments = $comments_statement->fetchAll();
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +57,7 @@ $comments = $comments_statement->fetchAll();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>My Blog Post - <?= $post['title'] ?></title>
+    <title>My Blog Post - <?= htmlspecialchars($post['title']) ?></title>
 </head>
 
 <body>
@@ -56,10 +68,10 @@ $comments = $comments_statement->fetchAll();
     <br><br>
     <div class="post">
         <div class="post-header">
-            <h3><a href="post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h3>
+            <h3><?= htmlspecialchars($post['title']) ?></h3>
         </div>
         <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
-        <p><?= nl2br($post['content']) ?></p>
+        <p><?= nl2br(htmlspecialchars($post['content'])) ?></p>
     </div>
 
     <h2>Comments</h2>
@@ -75,9 +87,8 @@ $comments = $comments_statement->fetchAll();
         <?php endif; ?>
     </div>
 
-
     <form action="submit_comment.php" method="post">
-        <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
+        <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>">
 
         <label for="comment">Comment:</label>
         <textarea name="comment" id="comment" required></textarea>
