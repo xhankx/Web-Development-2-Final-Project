@@ -22,7 +22,7 @@ if ($comment_id && $post_id) {
     
     if ($statement->execute()) {
         // Redirect back to the post after deletion
-        header("Location: delete_comment.php?id=" . $post_id);
+        header("Location: post.php?id=" . $post_id);
         exit();
     } else {
         echo "Error deleting comment.";

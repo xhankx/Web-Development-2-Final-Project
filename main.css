@@ -211,20 +211,3 @@ p {
     line-height: 1.5;
     color: #333;
 }
-
-.delete-form {
-    background-color: #721c24;
-    display: inline; /* Keep the form inline with the button */
-    margin: 0; /* Remove any margin around the form */
-    padding: 0; /* Remove any padding around the form */
-    padding: 500px;
-}
-
-.delete-form input[type="hidden"] {
-    display: none; /* Hide the hidden input fields */
-}
-
-.active {
-    font-weight: bold;
-    text-decoration: underline;
-}

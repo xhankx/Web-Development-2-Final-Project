@@ -12,7 +12,7 @@ require('connect.php');
 require('authenticate.php');
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-if ($id == false) {
+if ($id === false) {
     header("Location: index.php");
     exit();
 }
@@ -24,13 +24,13 @@ $statement->bindValue(':id', $id, PDO::PARAM_INT);
 $statement->execute();
 $post = $statement->fetch(PDO::FETCH_ASSOC);
 
-if ($post == false) {
+if ($post === false) {
     header("Location: index.php");
     exit();
 }
 
-$title = $post['title'];
-$content = $post['content'];
+$title = htmlspecialchars($post['title'], ENT_QUOTES, 'UTF-8');
+$content = htmlspecialchars($post['content'], ENT_QUOTES, 'UTF-8');
 $vegetarian_id = $post['vegetarian_id'];
 $errors = [];
 
@@ -44,7 +44,7 @@ $categories = $categoryStatement->fetchAll(PDO::FETCH_ASSOC);
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
-    $vegetarian_id = filter_input(INPUT_POST, 'vegetarian_id', FILTER_VALIDATE_INT);  // Update the vegetarian_id with the new value
+    $vegetarian_id = filter_input(INPUT_POST, 'vegetarian_id', FILTER_VALIDATE_INT);
 
     if (strlen(trim($title)) < 1) {
         $errors['title'] = 'Title is required and must be at least 1 character in length.';
@@ -57,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
     if (empty($errors)) {
         $query = "UPDATE posts SET title = :title, content = :content, vegetarian_id = :vegetarian_id WHERE id = :id";
         $statement = $db->prepare($query);
-        $statement->bindValue(':title', $title);
-        $statement->bindValue(':content', $content);
+        $statement->bindValue(':title', $title, PDO::PARAM_STR);
+        $statement->bindValue(':content', $content, PDO::PARAM_STR);
         $statement->bindValue(':vegetarian_id', $vegetarian_id, PDO::PARAM_INT);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
@@ -86,7 +86,6 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     }
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +96,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>My Blog - Editing <?= htmlspecialchars($post['title']) ?></title>
+    <title>My Blog - Editing <?= htmlspecialchars($post['title'], ENT_QUOTES, 'UTF-8') ?></title>
 
     <!-- CKEditor 5 CDN -->
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
@@ -112,13 +111,13 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         <div>
             <label for="title">Title</label>
             <br>
-            <input type="text" id="title" name="title" value="<?= htmlspecialchars($title) ?>">
+            <input type="text" id="title" name="title" value="<?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?>">
             <br><br>
         </div>
         <div>
             <label for="content">Content</label>
             <br>
-            <textarea id="content" name="content"><?= htmlspecialchars($content) ?></textarea>
+            <textarea id="content" name="content"><?= htmlspecialchars($content, ENT_QUOTES, 'UTF-8') ?></textarea>
             <br><br>
         </div>
         <div>
@@ -127,7 +126,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
             <select id="vegetarian_id" name="vegetarian_id">
                 <?php foreach ($categories as $category): ?>
                     <option value="<?= $category['id'] ?>" <?= $category['id'] == $vegetarian_id ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($category['name']) ?>
+                        <?= htmlspecialchars($category['name'], ENT_QUOTES, 'UTF-8') ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -147,7 +146,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         <div class="errors">
             <ul>
                 <?php foreach ($errors as $error): ?>
-                    <li><?= $error ?></li>
+                    <li><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -164,4 +163,3 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
 </body>
 
 </html>
-

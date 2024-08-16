@@ -65,7 +65,7 @@ $posts = $statement->fetchAll();
     <?php foreach ($posts as $post): ?>
         <div class="post">
             <div class="post-header">
-                <h3><a href="post.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
+                <h3><a href="delete_comment.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
                 <small><a href="edit.php?id=<?= $post['id'] ?>">Edit</a></small>
             </div>
             <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
