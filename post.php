@@ -10,17 +10,16 @@
 
 require('connect.php');
 
-// Get the ID and slug from the URL
+// Get the ID from the URL
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-$slug = filter_input(INPUT_GET, 'title', FILTER_SANITIZE_STRING);
 
-if ($id === false || $slug === false) {
+if ($id === false) {
     header("Location: index.php");
     exit();
 }
 
 // Fetch the post from the database
-$query = "SELECT id, title, date, content FROM posts WHERE id = :id";
+$query = "SELECT id, title, date, content, image FROM posts WHERE id = :id";
 $statement = $db->prepare($query);
 $statement->bindValue(':id', $id, PDO::PARAM_INT);
 $statement->execute();
@@ -31,23 +30,12 @@ if ($post === false) {
     exit();
 }
 
-// Generate the correct slug based on the post title
-$correct_slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $post['title']), '-'));
-
-// Check if the slug matches the correct slug
-if ($slug !== $correct_slug) {
-    // Redirect to the "super pretty" URL if the slug doesn't match
-    header("Location: /posts/$id/$correct_slug", true, 301);
-    exit();
-}
-
 // Fetch comments for this post
 $comments_query = "SELECT comment FROM comments WHERE post_id = :post_id";
 $comments_statement = $db->prepare($comments_query);
 $comments_statement->bindValue(':post_id', $id, PDO::PARAM_INT);
 $comments_statement->execute();
 $comments = $comments_statement->fetchAll();
-
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +46,6 @@ $comments = $comments_statement->fetchAll();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/wd2/Assignments/Project/Web-Development-2-Final-Project/main.css">
-
     <title>My Blog Post - <?= htmlspecialchars($post['title']) ?></title>
 </head>
 
@@ -74,6 +61,12 @@ $comments = $comments_statement->fetchAll();
             <h3><?= htmlspecialchars($post['title']) ?></h3>
         </div>
         <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
+        
+        <!-- Display the image if it exists -->
+        <?php if (!empty($post['image'])): ?>
+            <img src="/wd2/Assignments/Project/Web-Development-2-Final-Project/uploads/images/<?= htmlspecialchars($post['image']) ?>" alt="<?= htmlspecialchars($post['title']) ?>" style="max-width:100%; height:auto;">
+        <?php endif; ?>
+
         <p><?= nl2br(htmlspecialchars($post['content'])) ?></p>
     </div>
 
@@ -90,7 +83,8 @@ $comments = $comments_statement->fetchAll();
         <?php endif; ?>
     </div>
 
-    <form action="submit_comment.php" method="post">
+    <form action="/wd2/Assignments/Project/Web-Development-2-Final-Project/submit_comment.php" method="post">
+
         <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>">
 
         <label for="comment">Comment:</label>
@@ -100,15 +94,13 @@ $comments = $comments_statement->fetchAll();
         <img src="/wd2/Assignments/Project/Web-Development-2-Final-Project/captcha.php" alt="CAPTCHA Image">
         <input type="text" name="captcha" id="captcha" required>
 
-
         <?php if (isset($_GET['captcha_error'])): ?>
             <p style="color:red;">CAPTCHA was incorrect. Please try again.</p>
         <?php endif; ?>
-        <br>
-        <br>
+        
+        <br><br>
         <button type="submit">Submit</button>
     </form>
-
 </body>
 
 </html>

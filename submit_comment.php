@@ -8,10 +8,12 @@ $captcha = filter_input(INPUT_POST, 'captcha', FILTER_SANITIZE_STRING);
 
 // Validate the CAPTCHA
 if ($captcha !== $_SESSION['captcha_text']) {
-    // If CAPTCHA is incorrect, redirect back to the post page with an error message
-    header("Location: post.php?id=$post_id&captcha_error=1");
+    // If CAPTCHA is incorrect, redirect back to the original post page with an error message
+    header("Location: /wd2/Assignments/Project/Web-Development-2-Final-Project/post.php?id=$post_id&title=$slug&captcha_error=1");
     exit();
 }
+
+
 
 // Clear the CAPTCHA session value to prevent reuse
 unset($_SESSION['captcha_text']);
@@ -25,10 +27,11 @@ if ($post_id && $comment) {
     $statement->execute();
 
     // Redirect back to the post page after submission
-    header("Location: post.php?id=$post_id");
+    header("Location: /wd2/Assignments/Project/Web-Development-2-Final-Project/post.php?id=$post_id");
     exit();
 } else {
     // Handle errors
-    echo "Invalid post ID or comment.";
+    header("Location: /wd2/Assignments/Project/Web-Development-2-Final-Project/index.php");
+    exit();
 }
 ?>
