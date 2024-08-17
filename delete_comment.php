@@ -10,12 +10,25 @@
 
 session_start();
 
-// Check if the user is logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+// Define the admin login credentials
+define('ADMIN_LOGIN', 'wally');
+define('ADMIN_PASSWORD', 'mypass');
+
+// Check if the user is logged in via session or HTTP Basic Authentication
+if (
+    (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) &&
+    (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) ||
+    ($_SERVER['PHP_AUTH_USER'] != ADMIN_LOGIN) ||
+    ($_SERVER['PHP_AUTH_PW'] != ADMIN_PASSWORD))
+) {
+    // If neither session-based nor HTTP Basic Authentication is valid, redirect to login
     header('Location: login.php');
     exit();
 }
+
+// Include database connection and other necessary files
 require('connect.php');
+require('authenticate.php');
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if ($id == false) {

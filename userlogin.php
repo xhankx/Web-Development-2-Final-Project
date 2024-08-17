@@ -32,12 +32,14 @@ $posts = $statement->fetchAll();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
     <title>All About Food</title>
 </head>
+
 <body>
     <!-- Your existing admin page HTML content -->
     <div class="head">
@@ -46,6 +48,10 @@ $posts = $statement->fetchAll();
     <br>
     <a class="home" href="index.php">Home</a>
     <a class="newpost" href="newpost.php">Create New Recipes</a>
+    <a class="logout" href="logout.php">Logout</a>
+
+
+
     <br><br>
     <h2>Recent Recipes</h2>
     <br>
@@ -67,4 +73,5 @@ $posts = $statement->fetchAll();
         </div>
     <?php endforeach; ?>
 </body>
+
 </html>

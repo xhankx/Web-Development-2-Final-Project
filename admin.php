@@ -1,14 +1,8 @@
 <?php
-session_start();
-
-// Check if the user is logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('Location: login.php');
-    exit();
-}
 
 // Your existing admin page content starts here
 require('connect.php');
+require('authenticate.php');
 
 // Determine the sort order (default is by date)
 $sort = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_STRING);
@@ -42,7 +36,8 @@ $posts = $statement->fetchAll();
     <!-- Your existing admin page HTML content -->
     <div class="head">
         <h1><a href="index.php">Food Hub</a></h1>
-        <h3><a href="admin.php">admin</a></h3>
+        <h3><a href="users.php">Manage Users</a>
+        </h3>
     </div>
     <br>
     <a class="home" href="index.php">Home</a>

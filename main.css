@@ -84,7 +84,9 @@ form {
     box-shadow: none;
 }
 
-
+.logout{
+    margin-left: 500px;
+}
 
 form div {
     margin-bottom: 10px;
