@@ -9,7 +9,7 @@
 ****************/
 
 require('connect.php');
-require('authenticate.php');
+//require('authenticate.php');
 
 $title = '';
 $content = '';
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $statement->bindValue(':image', $image, PDO::PARAM_STR);
         $statement->execute();
 
-        header("Location: admin.php");
+        header("Location: userlogin.php");
         exit();
     }
 }
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
     <h1><a href="index.php">Create New Recipes</a></h1>
-    <a class="home" href="admin.php">Return to Admin</a>
+    <a class="home" href="userlogin.php">Return to Hub</a>
     <br><br>
 
     <form method="post" action="newpost.php" enctype="multipart/form-data">

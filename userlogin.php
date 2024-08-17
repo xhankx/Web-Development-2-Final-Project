@@ -42,7 +42,6 @@ $posts = $statement->fetchAll();
     <!-- Your existing admin page HTML content -->
     <div class="head">
         <h1><a href="index.php">Food Hub</a></h1>
-        <h3><a href="admin.php">admin</a></h3>
     </div>
     <br>
     <a class="home" href="index.php">Home</a>
@@ -52,9 +51,9 @@ $posts = $statement->fetchAll();
     <br>
     <div>
         <strong>Sort by:</strong>
-        <a href="admin.php?sort=title" class="<?= $sort === 'title' ? 'active' : '' ?>">Title</a> |
-        <a href="admin.php?sort=created_at" class="<?= $sort === 'created_at' ? 'active' : '' ?>">Date Created</a> |
-        <a href="admin.php?sort=updated_at" class="<?= $sort === 'updated_at' ? 'active' : '' ?>">Date Updated</a>
+        <a href="userlogin.php?sort=title" class="<?= $sort === 'title' ? 'active' : '' ?>">Title</a> |
+        <a href="userlogin.php?sort=created_at" class="<?= $sort === 'created_at' ? 'active' : '' ?>">Date Created</a> |
+        <a href="userlogin.php?sort=updated_at" class="<?= $sort === 'updated_at' ? 'active' : '' ?>">Date Updated</a>
     </div>
     <br>
     <?php foreach ($posts as $post): ?>

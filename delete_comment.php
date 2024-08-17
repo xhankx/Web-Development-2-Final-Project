@@ -51,7 +51,7 @@ $comments = $comments_statement->fetchAll();
 <body>
     <br>
     <h1><a href="index.php">Food Hub</a></h1>
-    <a class="home" href="admin.php">Return to Admin</a>
+    <a class="home" href="userlogin.php">Return to Hub</a>
     <br><br>
     <div class="post">
         <div class="post-header">

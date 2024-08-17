@@ -85,12 +85,11 @@ $totalPages = ceil($totalPosts / $limit);
 </head>
 
 <body>
-    <br>
+
     <div class="head">
         <h1><a href="index.php">Food Hub</a></h1>
         <h3><a href="admin.php">admin</a></h3>
     </div>
-
 
 
     <!-- Sign-Up and Login Buttons -->
