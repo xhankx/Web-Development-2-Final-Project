@@ -74,15 +74,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $uploadFileDir = 'uploads/images/';
         $dest_path = $uploadFileDir . $fileName;
 
-        // Move the file to the upload directory
-        if (move_uploaded_file($fileTmpPath, $dest_path)) {
-            // Resize the image
-            $maxWidth = 800;
-            $maxHeight = 600;
-            resizeImage($dest_path, $dest_path, $maxWidth, $maxHeight);
-            $image = $fileName;
+        // Check if the uploaded file is indeed an image
+        $imageInfo = getimagesize($fileTmpPath);
+        if ($imageInfo === false) {
+            $errors['image'] = 'The uploaded file is not a valid image.';
         } else {
-            $errors['image'] = 'There was an error moving the uploaded file.';
+            // Move the file to the upload directory
+            if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                // Resize the image
+                $maxWidth = 800;
+                $maxHeight = 600;
+                resizeImage($dest_path, $dest_path, $maxWidth, $maxHeight);
+                $image = $fileName;
+            } else {
+                $errors['image'] = 'There was an error moving the uploaded file.';
+            }
         }
     }
 
