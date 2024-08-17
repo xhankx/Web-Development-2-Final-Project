@@ -10,10 +10,11 @@
 
 require('connect.php');
 
-// Get the ID from the URL
+// Get the ID and slug from the URL
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$slug = filter_input(INPUT_GET, 'slug', FILTER_SANITIZE_STRING);
 
-if ($id === false) {
+if ($id === false || empty($slug)) {
     header("Location: index.php");
     exit();
 }
@@ -27,6 +28,16 @@ $post = $statement->fetch();
 
 if ($post === false) {
     header("Location: index.php");
+    exit();
+}
+
+// Generate the correct slug based on the post title
+$correct_slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $post['title']), '-'));
+
+// Check if the slug matches the correct slug
+if ($slug !== $correct_slug) {
+    // Redirect to the "super pretty" URL if the slug doesn't match
+    header("Location: /wd2/Assignments/Project/Web-Development-2-Final-Project/post.php?id=$id&slug=$correct_slug", true, 301);
     exit();
 }
 
@@ -50,7 +61,6 @@ $comments = $comments_statement->fetchAll();
 </head>
 
 <body>
-    <!-- Remember that alternative syntax is good and html inside php is bad -->
     <br>
     <h1><a href="/wd2/Assignments/Project/Web-Development-2-Final-Project/index.php">Food Hub</a></h1>
     <a class="home" href="/wd2/Assignments/Project/Web-Development-2-Final-Project/index.php">Home</a>

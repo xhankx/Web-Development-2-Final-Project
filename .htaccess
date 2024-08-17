@@ -1,5 +1,2 @@
 RewriteEngine On
-RewriteBase /wd2/Assignments/Project/Web-Development-2-Final-Project/
-
-# Redirect pretty URLs to post.php
-RewriteRule ^posts/([0-9]+)/([a-zA-Z0-9-]+)$ post.php?id=$1&title=$2 [L,QSA]
+RewriteRule ^post/([0-9]+)/([a-z0-9-]+)$ post.php?id=$1&slug=$2 [L,QSA]

@@ -137,7 +137,10 @@ $totalPages = ceil($totalPosts / $limit);
     <?php foreach ($posts as $post): ?>
         <div class="post">
             <div class="post-header">
-                <h3><a href="post.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
+                <h3><a
+                        href="/wd2/Assignments/Project/Web-Development-2-Final-Project/post.php?id=<?= $post['id'] ?>&slug=<?= strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $post['title']), '-')) ?>">
+                        <?= htmlspecialchars($post['title']) ?>
+                    </a></h3>
             </div>
             <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
             <p>
