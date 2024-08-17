@@ -86,10 +86,25 @@ $totalPages = ceil($totalPosts / $limit);
 
 <body>
     <br>
-    <h1><a href="index.php">Food Hub</a></h1>
-    <br>
-    <h3><a href="admin.php">admin</a></h3>
-    <br>
+    <div class="head">
+        <h1><a href="index.php">Food Hub</a></h1>
+        <h3><a href="admin.php">admin</a></h3>
+    </div>
+
+
+
+    <!-- Sign-Up and Login Buttons -->
+    <div class="signAndLogin">
+        <!-- Sign-Up Button -->
+        <a href="register.php">
+            <button type="button">Sign Up</button>
+        </a>
+
+        <!-- Login Button -->
+        <a href="login.php">
+            <button type="button">Login</button>
+        </a>
+    </div>
 
     <a class="home" href="index.php">Home</a>
 
@@ -109,7 +124,8 @@ $totalPages = ceil($totalPosts / $limit);
                 <option value="">All Categories</option>
                 <?php foreach ($categories as $category): ?>
                     <option value="<?= $category['id'] ?>" <?= $category_id == $category['id'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($category['name']) ?></option>
+                        <?= htmlspecialchars($category['name']) ?>
+                    </option>
                 <?php endforeach; ?>
             </select>
             <button type="submit">Search</button>
@@ -120,25 +136,26 @@ $totalPages = ceil($totalPosts / $limit);
     <h2>Recently Recipes</h2>
     <br>
     <?php foreach ($posts as $post): ?>
-    <div class="post">
-        <div class="post-header">
-            <h3><a href="post.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
+        <div class="post">
+            <div class="post-header">
+                <h3><a href="post.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
+            </div>
+            <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
+            <p>
+                <?= nl2br(strlen($post['content']) > 200 ? substr($post['content'], 0, 200) . '...' : htmlspecialchars($post['content'])) ?>
+                <?php if (strlen($post['content']) > 200): ?>
+                    <a href="post.php?id=<?= $post['id'] ?>">Read Full Post</a>
+                <?php endif; ?>
+            </p>
+            <br>
         </div>
-        <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
-        <p>
-            <?= nl2br(strlen($post['content']) > 200 ? substr($post['content'], 0, 200) . '...' : htmlspecialchars($post['content'])) ?>
-            <?php if (strlen($post['content']) > 200): ?>
-                <a href="post.php?id=<?= $post['id'] ?>">Read Full Post</a>
-            <?php endif; ?>
-        </p>
-        <br>
-    </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
 
     <!-- Pagination Links -->
     <div class="pagination">
         <?php if ($page > 1): ?>
-            <a href="index.php?search=<?= urlencode($search) ?>&category=<?= $category_id ?>&page=<?= $page - 1 ?>">Previous</a>
+            <a
+                href="index.php?search=<?= urlencode($search) ?>&category=<?= $category_id ?>&page=<?= $page - 1 ?>">Previous</a>
         <?php endif; ?>
 
         <?php for ($i = 1; $i <= $totalPages; $i++): ?>

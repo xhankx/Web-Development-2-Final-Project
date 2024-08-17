@@ -40,6 +40,27 @@ h1 {
     font-family: 'Carrois Gothic';
 }
 
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head h1 {
+    margin: 0;
+}
+
+.head h3 {
+    margin: 0;
+}
+
+.signAndLogin {
+    display: flex;
+    gap: 20px;
+    justify-content: left;
+    padding: 20px;
+    margin-left: -20px;
+}
 
 /* Links styling */
 a {
@@ -57,11 +78,10 @@ h1 a:hover {
 
 /* Form styling */
 form {
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    background-color: transparent; /* Remove white background */
+    padding: 10px;
+    border: none;
+    box-shadow: none;
 }
 
 form div {
@@ -142,8 +162,9 @@ p {
 }
 
 .home {
-    font-size: 18px;
+    font-size: 20px;
     margin-right: 30px;
+    
 }
 
 .newpost {
@@ -214,11 +235,16 @@ p {
 
 /* Remove the background, padding, and border from the form */
 .delete-form {
-    background-color: transparent; /* Remove the background */
-    padding: 0; /* Remove padding */
-    border: none; /* Remove border */
-    display: inline; /* Make the form inline to avoid block-level behavior */
-    margin: 0; /* Remove any default margins */
+    background-color: transparent;
+    /* Remove the background */
+    padding: 0;
+    /* Remove padding */
+    border: none;
+    /* Remove border */
+    display: inline;
+    /* Make the form inline to avoid block-level behavior */
+    margin: 0;
+    /* Remove any default margins */
 }
 
 /* Optionally, ensure the button remains styled */
@@ -229,7 +255,8 @@ p {
     padding: 10px 15px;
     border-radius: 3px;
     cursor: pointer;
-    margin-top: 5px; /* Adjust margin as needed */
+    margin-top: 5px;
+    /* Adjust margin as needed */
 }
 
 .delete-button:hover {
