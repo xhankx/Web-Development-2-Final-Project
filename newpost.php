@@ -3,10 +3,11 @@
 /*******w******** 
     
     Name: Hang Xu   
-    Date: 2024-06-30
-    Description: Assignment 3 Blogging Application
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
 
 ****************/
+
 session_start();
 
 // Define the admin login credentials
@@ -17,8 +18,8 @@ define('ADMIN_PASSWORD', 'mypass');
 if (
     (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) &&
     (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) ||
-    ($_SERVER['PHP_AUTH_USER'] != ADMIN_LOGIN) ||
-    ($_SERVER['PHP_AUTH_PW'] != ADMIN_PASSWORD))
+        ($_SERVER['PHP_AUTH_USER'] != ADMIN_LOGIN) ||
+        ($_SERVER['PHP_AUTH_PW'] != ADMIN_PASSWORD))
 ) {
     // If neither session-based nor HTTP Basic Authentication is valid, redirect to login
     header('Location: login.php');
@@ -34,7 +35,8 @@ $content = '';
 $errors = [];
 
 // Resize image function
-function resizeImage($source, $destination, $maxWidth, $maxHeight) {
+function resizeImage($source, $destination, $maxWidth, $maxHeight)
+{
     list($width, $height, $type) = getimagesize($source);
     $ratio = $width / $height;
 
@@ -62,10 +64,10 @@ function resizeImage($source, $destination, $maxWidth, $maxHeight) {
 
     imagecopyresampled($newImage, $sourceImage, 0, 0, 0, 0, $maxWidth, $maxHeight, $width, $height);
     imagejpeg($newImage, $destination, 90);
-    
+
     imagedestroy($newImage);
     imagedestroy($sourceImage);
-    
+
     return true;
 }
 
@@ -127,12 +129,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>Food Hub</title>
+    <title>Food Hub - Creating</title>
     <!-- CKEditor 5 CDN -->
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
@@ -145,13 +148,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <form method="post" action="newpost.php" enctype="multipart/form-data">
         <div>
-            <label for="title">Title</label>
+            <label for="title">The Recipe</label>
             <br>
             <input type="text" id="title" name="title" value="<?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?>">
             <br><br>
         </div>
         <div>
-            <label for="content">Content</label>
+            <label for="content">More About The Recipe</label>
+            <br>
             <br>
             <textarea id="content" name="content"><?= htmlspecialchars($content, ENT_QUOTES, 'UTF-8') ?></textarea>
             <br><br>
@@ -187,4 +191,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             });
     </script>
 </body>
+
 </html>

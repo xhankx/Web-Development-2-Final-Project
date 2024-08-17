@@ -3,8 +3,8 @@
 /*******w******** 
     
     Name: Hang Xu   
-    Date: 2024-06-30
-    Description: Registration Script
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
 
 ****************/
 
@@ -92,13 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form action="register.php" method="post">
         <label for="username">Email:</label>
         <input type="email" id="username" name="username" required><br>
-
+        <br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
-
+        <br>
         <label for="confirm_password">Confirm Password:</label>
         <input type="password" id="confirm_password" name="confirm_password" required><br>
-
+        <br>
         <button type="submit">Register</button>
     </form>
 

@@ -3,8 +3,8 @@
 /*******w******** 
     
     Name: Hang Xu   
-    Date: 2024-06-30
-    Description: Delete Comment Script
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
 
 ****************/
 
@@ -19,7 +19,7 @@ if ($comment_id && $post_id) {
     $delete_query = "DELETE FROM comments WHERE id = :id";
     $statement = $db->prepare($delete_query);
     $statement->bindValue(':id', $comment_id, PDO::PARAM_INT);
-    
+
     if ($statement->execute()) {
         // Redirect back to the post after deletion
         header("Location: delete_comment.php?id=" . $post_id);

@@ -1,4 +1,13 @@
 <?php
+
+/*******w******** 
+    
+    Name: Hang Xu   
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
+
+****************/
+
 session_start();
 
 // Check if the user is logged in
@@ -37,7 +46,7 @@ $posts = $statement->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>All About Food</title>
+    <title>Food Hub User Page</title>
 </head>
 
 <body>

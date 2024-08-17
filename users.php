@@ -1,4 +1,13 @@
 <?php
+
+/*******w******** 
+    
+    Name: Hang Xu   
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
+
+****************/
+
 session_start();
 require('connect.php');
 require('authenticate.php');
@@ -39,17 +48,20 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
         </thead>
         <tbody>
             <?php foreach ($users as $user): ?>
-            <tr>
-                <td><?= htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8') ?></td>
-                <td><?= htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') ?></td>
-                <td>
-                    <a href="edit_user.php?id=<?= $user['id'] ?>">Edit</a>
-                    <a href="delete_user.php?id=<?= $user['id'] ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td><?= htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8') ?></td>
+                    <td><?= htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') ?></td>
+                    <td>
+                        <a href="edit_user.php?id=<?= $user['id'] ?>">Edit</a>
+                        <a href="delete_user.php?id=<?= $user['id'] ?>"
+                            onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                    </td>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <br>
 
     <h2>Add New User</h2>
     <form action="add_user.php" method="post">

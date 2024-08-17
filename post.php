@@ -3,8 +3,8 @@
 /*******w******** 
     
     Name: Hang Xu   
-    Date: 2024-06-30
-    Description: Assignment 3 Blogging Application
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
 
 ****************/
 
@@ -57,7 +57,7 @@ $comments = $comments_statement->fetchAll();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/wd2/Assignments/Project/Web-Development-2-Final-Project/main.css">
-    <title>My Blog Post - <?= htmlspecialchars($post['title']) ?></title>
+    <title>Food Hub - <?= htmlspecialchars($post['title']) ?></title>
 </head>
 
 <body>
@@ -71,10 +71,11 @@ $comments = $comments_statement->fetchAll();
             <h3><?= htmlspecialchars($post['title']) ?></h3>
         </div>
         <p><small><?= date('F d, Y, h:i a', strtotime($post['date'])) ?></small></p>
-        
+        <br>
         <!-- Display the image if it exists -->
         <?php if (!empty($post['image'])): ?>
-            <img src="/wd2/Assignments/Project/Web-Development-2-Final-Project/uploads/images/<?= htmlspecialchars($post['image']) ?>" alt="<?= htmlspecialchars($post['title']) ?>" style="max-width:100%; height:auto;">
+            <img src="/wd2/Assignments/Project/Web-Development-2-Final-Project/uploads/images/<?= htmlspecialchars($post['image']) ?>"
+                alt="<?= htmlspecialchars($post['title']) ?>" style="max-width:100%; height:auto;">
         <?php endif; ?>
 
         <p><?= nl2br(htmlspecialchars($post['content'])) ?></p>
@@ -100,6 +101,8 @@ $comments = $comments_statement->fetchAll();
         <label for="comment">Comment:</label>
         <textarea name="comment" id="comment" required></textarea>
 
+        <br>
+        <br>
         <label for="captcha">Enter the code:</label>
         <img src="/wd2/Assignments/Project/Web-Development-2-Final-Project/captcha.php" alt="CAPTCHA Image">
         <input type="text" name="captcha" id="captcha" required>
@@ -107,7 +110,7 @@ $comments = $comments_statement->fetchAll();
         <?php if (isset($_GET['captcha_error'])): ?>
             <p style="color:red;">CAPTCHA was incorrect. Please try again.</p>
         <?php endif; ?>
-        
+
         <br><br>
         <button type="submit">Submit</button>
     </form>

@@ -1,4 +1,13 @@
 <?php
+
+/*******w******** 
+    
+    Name: Hang Xu   
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
+
+****************/
+
 session_start();
 require('connect.php');
 
@@ -94,7 +103,7 @@ if (isset($_COOKIE['remember_me'])) {
         <form action="login.php" method="post">
             <label for="username">Email:</label>
             <input type="text" id="username" name="username" required>
-
+            <br><br>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 

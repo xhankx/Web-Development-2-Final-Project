@@ -1,10 +1,11 @@
 /*******w******** 
     
     Name: Hang Xu   
-    Date: 2024-06-30
-    Description: Assignment 3 Blogging Application
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
 
 ****************/
+
 @import url(http://fonts.googleapis.com/css?family=Carrois+Gothic);
 
 /* Reset some default styles */
@@ -78,13 +79,14 @@ h1 a:hover {
 
 /* Form styling */
 form {
-    background-color: transparent; /* Remove white background */
+    background-color: transparent;
+    /* Remove white background */
     padding: 10px;
     border: none;
     box-shadow: none;
 }
 
-.logout{
+.logout {
     margin-left: 500px;
 }
 
@@ -168,7 +170,7 @@ p {
 .home {
     font-size: 20px;
     margin-right: 30px;
-    
+
 }
 
 .newpost {
@@ -266,4 +268,3 @@ p {
 .delete-button:hover {
     background-color: #003d80;
 }
-

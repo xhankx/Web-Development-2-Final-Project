@@ -3,8 +3,8 @@
 /*******w******** 
     
     Name: Hang Xu   
-    Date: 2024-06-30
-    Description: Assignment 3 Blogging Application
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
 
 ****************/
 
@@ -82,7 +82,7 @@ $totalPages = ceil($totalPosts / $limit);
     <!-- Remember that alternative syntax is good and html inside php is bad -->
     <br>
     <h1><a href="index.php">Food Hub</a></h1>
-    <h3><a href="admin.php">admin</a></h3>
+    <h3><a href="admin.php">Admin</a></h3>
 
     <a class="home" href="index.php">Home</a>
 

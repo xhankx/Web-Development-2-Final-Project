@@ -3,8 +3,8 @@
 /*******w******** 
     
     Name: Hang Xu   
-    Date: 2024-06-30
-    Description: Assignment 3 Blogging Application
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
 
 ****************/
 
@@ -18,8 +18,8 @@ define('ADMIN_PASSWORD', 'mypass');
 if (
     (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) &&
     (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) ||
-    ($_SERVER['PHP_AUTH_USER'] != ADMIN_LOGIN) ||
-    ($_SERVER['PHP_AUTH_PW'] != ADMIN_PASSWORD))
+        ($_SERVER['PHP_AUTH_USER'] != ADMIN_LOGIN) ||
+        ($_SERVER['PHP_AUTH_PW'] != ADMIN_PASSWORD))
 ) {
     // If neither session-based nor HTTP Basic Authentication is valid, redirect to login
     header('Location: login.php');
@@ -117,7 +117,7 @@ $comments = $comments_statement->fetchAll();
         <?php if (isset($_GET['captcha_error'])): ?>
             <p style="color:red;">CAPTCHA was incorrect. Please try again.</p>
         <?php endif; ?>
-
+        <br><br>
         <button type="submit">Submit</button>
     </form>
 

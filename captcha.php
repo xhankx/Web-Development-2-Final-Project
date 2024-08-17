@@ -1,4 +1,12 @@
 <?php
+/*******w******** 
+    
+    Name: Hang Xu   
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
+
+****************/
+
 session_start();
 
 // Generate a random CAPTCHA string

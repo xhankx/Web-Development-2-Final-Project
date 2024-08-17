@@ -1,4 +1,11 @@
 <?php
+/*******w******** 
+    
+    Name: Hang Xu   
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
+
+****************/
 
 // Your existing admin page content starts here
 require('connect.php');
@@ -30,7 +37,7 @@ $posts = $statement->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>All About Food</title>
+    <title>Food Hub Admin page</title>
 </head>
 <body>
     <!-- Your existing admin page HTML content -->

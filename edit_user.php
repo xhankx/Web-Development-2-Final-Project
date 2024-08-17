@@ -1,4 +1,13 @@
 <?php
+
+/*******w******** 
+    
+    Name: Hang Xu   
+    Date: 2024-08-12
+    Description: Web Development 2---- PHP CRUD-based Content Management System (CMS)
+
+****************/
+
 session_start();
 require('connect.php');
 require('authenticate.php');
@@ -50,7 +59,7 @@ $user = $statement->fetch(PDO::FETCH_ASSOC);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>Edit User</title>
+    <title>Food Hub Edit User</title>
 </head>
 
 <body>
@@ -60,7 +69,8 @@ $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     <form action="edit_user.php?id=<?= $id ?>" method="post">
         <label for="username">Username (Email):</label>
-        <input type="email" id="username" name="username" value="<?= htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') ?>" required>
+        <input type="email" id="username" name="username"
+            value="<?= htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') ?>" required>
         <br><br>
         <label for="password">Password (Leave blank to keep current password):</label>
         <input type="password" id="password" name="password">
