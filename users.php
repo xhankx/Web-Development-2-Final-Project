@@ -25,7 +25,7 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
     <h1>Manage Users</h1>
-    <a href="admin.php">Back to Admin Dashboard</a>
+    <a href="admin.php">Back to Admin Page</a>
     <br><br>
 
     <h2>All Users</h2>

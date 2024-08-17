@@ -27,7 +27,6 @@ if (
 
 // Include database connection and other necessary files
 require('connect.php');
-require('authenticate.php');
 //require('authenticate.php');
 
 $title = '';

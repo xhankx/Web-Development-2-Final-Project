@@ -1,6 +1,6 @@
 <?php
 if (!defined('ADMIN_LOGIN')) {
-    define('ADMIN_LOGIN', 'wallyy');
+    define('ADMIN_LOGIN', 'wally');
 }
 
 if (!defined('ADMIN_PASSWORD')) {

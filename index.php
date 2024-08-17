@@ -88,7 +88,7 @@ $totalPages = ceil($totalPosts / $limit);
 
     <div class="head">
         <h1><a href="index.php">Food Hub</a></h1>
-        <h3><a href="admin.php">admin</a></h3>
+        <h3><a href="admin.php">Admin</a></h3>
     </div>
 
 

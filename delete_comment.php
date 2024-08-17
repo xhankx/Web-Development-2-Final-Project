@@ -28,7 +28,7 @@ if (
 
 // Include database connection and other necessary files
 require('connect.php');
-require('authenticate.php');
+//require('authenticate.php');
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if ($id == false) {
