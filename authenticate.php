@@ -7,11 +7,11 @@
 
 ****************/
 if (!defined('ADMIN_LOGIN')) {
-  define('ADMIN_LOGIN', 'wally');
+  define('ADMIN_LOGIN', 'admin');
 }
 
 if (!defined('ADMIN_PASSWORD')) {
-  define('ADMIN_PASSWORD', 'mypass');
+  define('ADMIN_PASSWORD', 'admin');
 }
 
 if (

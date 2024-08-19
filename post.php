@@ -94,7 +94,7 @@ $comments = $comments_statement->fetchAll();
         <?php endif; ?>
     </div>
 
-    <form action="/wd2/Assignments/Project/Web-Development-2-Final-Project/submit_comment.php" method="post">
+    <form action="submit_comment.php" method="post">
 
         <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>">
 
@@ -104,7 +104,7 @@ $comments = $comments_statement->fetchAll();
         <br>
         <br>
         <label for="captcha">Enter the code:</label>
-        <img src="/wd2/Assignments/Project/Web-Development-2-Final-Project/captcha.php" alt="CAPTCHA Image">
+        <img src="captcha.php" alt="CAPTCHA Image">
         <input type="text" name="captcha" id="captcha" required>
 
         <?php if (isset($_GET['captcha_error'])): ?>
